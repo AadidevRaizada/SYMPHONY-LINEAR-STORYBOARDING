@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+.firecrawl/
+test-storyboards/
+npm-debug.log*

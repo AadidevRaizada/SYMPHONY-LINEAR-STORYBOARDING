@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Linear Stickman Explainer</title>
+    <style>
+      :root {
+        --bg: oklch(1 0 0);
+        --surface: oklch(0.973 0.006 268.5);
+        --ink: oklch(0.18 0.025 268.5);
+        --muted: oklch(0.43 0.032 268.5);
+        --border: oklch(0.88 0.014 268.5);
+        --primary: oklch(0.476 0.158 268.5);
+        --primary-hover: oklch(0.42 0.16 268.5);
+        --danger: oklch(0.54 0.18 28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        width: min(920px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 48px 0;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        max-width: 68ch;
+        margin: 0 0 24px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 650;
+      }
+
+      input,
+      select {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+        color: var(--ink);
+        background: var(--surface);
+        font: inherit;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: var(--primary);
+        outline: 3px solid oklch(0.85 0.06 268.5);
+      }
+
+      button {
+        margin-top: 14px;
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 18px;
+        color: white;
+        background: var(--primary);
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          background 180ms ease,
+          transform 180ms ease;
+      }
+
+      button:hover:not(:disabled) {
+        background: var(--primary-hover);
+      }
+
+      button:active:not(:disabled) {
+        transform: translateY(1px);
+      }
+
+      button:focus-visible {
+        outline: 3px solid oklch(0.85 0.06 268.5);
+        outline-offset: 2px;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
+
+      .status {
+        min-height: 24px;
+        margin-top: 16px;
+        color: var(--muted);
+      }
+
+      .status.error {
+        color: var(--danger);
+      }
+
+      pre {
+        min-height: 260px;
+        margin: 16px 0 0;
+        overflow: auto;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        background: oklch(0.15 0.02 268.5);
+        color: oklch(0.94 0.01 268.5);
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 0.92rem;
+        line-height: 1.55;
+        white-space: pre-wrap;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        button {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Linear stickman explainer</h1>
+      <p>Generate three four-panel comic-strip images for a Linear issue and post them back as a Linear comment.</p>
+
+      <form id="generate-form">
+        <div class="grid">
+          <div>
+            <label for="issue-id">Linear issue ID</label>
+            <input id="issue-id" name="issueId" placeholder="5837d3a5-..." required />
+          </div>
+
+          <div>
+            <label for="mode">Mode</label>
+            <select id="mode" name="mode">
+              <option value="user">User impact</option>
+              <option value="technical">Technical impact</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="generate-button" type="submit">Generate comic strips</button>
+      </form>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <pre id="output" aria-label="Pipeline JSON">{}</pre>
+    </main>
+
+    <script>
+      const form = document.querySelector("#generate-form");
+      const issueInput = document.querySelector("#issue-id");
+      const modeInput = document.querySelector("#mode");
+      const button = document.querySelector("#generate-button");
+      const status = document.querySelector("#status");
+      const output = document.querySelector("#output");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        status.className = "status";
+        status.textContent = "Generating and posting comic strips...";
+        button.disabled = true;
+        output.textContent = "{}";
+
+        try {
+          const response = await fetch("/linear/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              issueId: issueInput.value,
+              mode: modeInput.value
+            })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || "Comic generation failed.");
+          }
+
+          status.textContent = `Posted Linear comment ${data.linear_comment_id}.`;
+          output.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          status.className = "status error";
+          status.textContent = error instanceof Error ? error.message : "Comic generation failed.";
+        } finally {
+          button.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
