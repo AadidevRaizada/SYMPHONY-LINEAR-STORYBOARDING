@@ -2,7 +2,8 @@ import { useState } from 'react'
 import logo from './Vibe-pr.png'
 import codexLogo from '../images/codex-color.svg'
 
-const installCommand = 'npx skills add inference-sh/skills@landing-page-design'
+const githubUrl = 'https://github.com/manishindiyaar/vibePR'
+const installCommand = 'npx github:manishindiyaar/vibePR'
 
 const proofItems = [
   ['Recorded run', 'Playwright captures the flow working after the agent ships.'],
@@ -34,8 +35,8 @@ function App() {
           <span>For Codex Pune community hackathon</span>
         </div>
         <div className="nav-actions">
-          <a href="https://github.com/" target="_blank" rel="noreferrer">
-            Docs
+          <a href={githubUrl} target="_blank" rel="noreferrer">
+            GitHub
           </a>
           <a className="button button-small" href="#demo">
             See it live
