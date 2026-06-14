@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import logo from './Vibe-pr.png'
 import codexLogo from '../images/codex-color.svg'
+import productGif from '../images/product_gif.gif'
 
 const githubUrl = 'https://github.com/manishindiyaar/vibePR'
 const installCommand = 'npx github:manishindiyaar/vibePR'
@@ -73,7 +74,7 @@ function App() {
           </div>
           <section className="hero-gif" aria-label="Product GIF">
             <div className="gif-frame">
-              <img src="../images/product_gif.gif" alt="Product GIF" />
+              <img src={productGif} alt="Product GIF" />
             </div>
           </section>
         </div>
