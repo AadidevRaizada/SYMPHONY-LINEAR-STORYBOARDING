@@ -1,0 +1,126 @@
+import { useState } from 'react'
+import logo from './Vibe-pr.png'
+import codexLogo from '../images/codex-color.svg'
+
+const installCommand = 'npx skills add inference-sh/skills@landing-page-design'
+
+const proofItems = [
+  ['Recorded run', 'Playwright captures the flow working after the agent ships.'],
+  ['Visual summary', 'A short storyboard explains the before, change, and result.'],
+  ['Code context', 'Root cause, files touched, and reviewer notes stay attached.'],
+]
+
+const steps = ['Issue', 'Agent', 'Verification', 'Reviewable PR']
+
+function App() {
+  const [copied, setCopied] = useState(false)
+
+  const copyInstallCommand = async () => {
+    await navigator.clipboard.writeText(installCommand)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1600)
+  }
+
+  return (
+    <main>
+      <nav className="nav" aria-label="Primary">
+        <a className="brand" href="/">
+          <img className="brand-logo" src={logo} alt="Vibe-PR" />
+          <span>Vibe-PR</span>
+        </a>
+        <div className="hackathon-badge" aria-label="For Codex Pune community hackathon">
+          <img className="codex-logo" src={codexLogo} alt="" aria-hidden="true" />
+          <span>For Codex Pune community hackathon</span>
+        </div>
+        <div className="nav-actions">
+          <a href="https://github.com/" target="_blank" rel="noreferrer">
+            Docs
+          </a>
+          <a className="button button-small" href="#demo">
+            See it live
+          </a>
+        </div>
+      </nav>
+
+      <section className="hero">
+        <div className="hero-copy">
+          <p className="eyebrow">The review layer for autonomous coding</p>
+          <h1>Understand any PR without losing the codebase context.</h1>
+          <p className="lede">
+            Vibe-PR turns agent-made pull requests into evidence, narrative, and
+            a clear review surface that anyone can open from anywhere.
+          </p>
+          <div className="hero-actions">
+            <a className="button" href="#demo">
+              Watch demo
+            </a>
+            <a className="text-link" href="#why">
+              Why it matters
+            </a>
+          </div>
+        </div>
+
+        <div className="hero-media">
+          <div className="install-command" aria-label="Install command">
+            <span>$</span>
+            <code>{installCommand}</code>
+            <button type="button" onClick={copyInstallCommand}>
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+          <section className="hero-gif" aria-label="Product GIF placeholder">
+            <div className="gif-frame">
+              <span>Drop product GIF here</span>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section
+        className="demo-video"
+        id="demo"
+        aria-label="Demo video"
+      >
+        <span>Demo video</span>
+      </section>
+
+      <section className="thesis" id="why">
+        <p>
+          The bottleneck is no longer code generation. It is trust, context, and
+          review speed.
+        </p>
+      </section>
+
+      <section className="flow" aria-label="Workflow">
+        {steps.map((step, index) => (
+          <div className="flow-step" key={step}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{step}</strong>
+          </div>
+        ))}
+      </section>
+
+      <section className="proof-grid" id="proof">
+        <div className="section-heading">
+          <p className="eyebrow">Demo surface</p>
+          <h2>Implementation, proof, and explanation in one PR.</h2>
+        </div>
+        {proofItems.map(([title, body]) => (
+          <article className="proof-card" key={title}>
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="final">
+        <p>"The code is not the product. The confidence is."</p>
+        <a className="button" href="#demo">
+          Open demo
+        </a>
+      </section>
+    </main>
+  )
+}
+
+export default App
