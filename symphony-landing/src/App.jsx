@@ -52,6 +52,7 @@ function App() {
             Vibe-PR turns agent-made pull requests into evidence, narrative, and
             a clear review storyboard that anyone can open from anywhere.
           </p>
+          
           <div className="hero-actions">
             <a className="button" href="#demo">
               Watch demo
@@ -62,7 +63,7 @@ function App() {
           </div>
         </div>
 
-        <div className="hero-media">
+          <div className="hero-media">
           <div className="install-command" aria-label="Install command">
             <span>$</span>
             <code>{installCommand}</code>
@@ -70,20 +71,24 @@ function App() {
               {copied ? 'Copied' : 'Copy'}
             </button>
           </div>
-          <section className="hero-gif" aria-label="Product GIF placeholder">
+          <section className="hero-gif" aria-label="Product GIF">
             <div className="gif-frame">
-              <span>Drop product GIF here</span>
+              <img src="../images/product_gif.gif" alt="Product GIF" />
             </div>
           </section>
         </div>
       </section>
 
-      <section
-        className="demo-video"
-        id="demo"
-        aria-label="Demo video"
-      >
-        <span>Demo video</span>
+      <section className="demo-video" id="demo" aria-label="Demo video">
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/Z3bmHX8ftDI"
+          title="Demo video"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </section>
 
       <section className="thesis" id="why">
