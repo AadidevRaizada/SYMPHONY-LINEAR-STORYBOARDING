@@ -7,10 +7,11 @@ const installCommand = 'npx skills add inference-sh/skills@landing-page-design'
 const proofItems = [
   ['Recorded run', 'Playwright captures the flow working after the agent ships.'],
   ['Visual summary', 'A short storyboard explains the before, change, and result.'],
-  ['Code context', 'Root cause, files touched, and reviewer notes stay attached.'],
+  ['Code context attached', 'Root cause, files touched, and reviewer notes travel with the PR.'],
+  ['Telegram alert', 'The user gets notified after context and proof are attached.'],
 ]
 
-const steps = ['Issue', 'Agent', 'Verification', 'Reviewable PR']
+const steps = ['Issue', 'Agent', 'Verification', 'Reviewable PR', 'Telegram']
 
 function App() {
   const [copied, setCopied] = useState(false)
@@ -114,7 +115,7 @@ function App() {
       </section>
 
       <section className="final">
-        <p>"The code is not the product. The confidence is."</p>
+        <p>"The next generation of agentic reviewing."</p>
         <a className="button" href="#demo">
           Open demo
         </a>
