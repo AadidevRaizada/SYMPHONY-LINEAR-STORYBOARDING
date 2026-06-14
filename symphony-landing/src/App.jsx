@@ -49,7 +49,7 @@ function App() {
           <h1>The chillest way to review AI code.</h1>
           <p className="lede">
             Vibe-PR turns agent-made pull requests into evidence, narrative, and
-            a clear review surface that anyone can open from anywhere.
+            a clear review storyboard that anyone can open from anywhere.
           </p>
           <div className="hero-actions">
             <a className="button" href="#demo">
