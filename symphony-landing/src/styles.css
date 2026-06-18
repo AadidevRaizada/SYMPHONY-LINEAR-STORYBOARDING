@@ -398,6 +398,41 @@ h1 {
   font-weight: 820;
 }
 
+.footer {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 36px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  transition:
+    color 200ms ease,
+    border-color 200ms ease,
+    transform 160ms ease;
+}
+
+.social-link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.social-icon {
+  width: 22px;
+  height: 22px;
+}
+
 @media (max-width: 920px) {
   .nav {
     grid-template-columns: 1fr auto;
